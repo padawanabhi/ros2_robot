@@ -1,0 +1,9 @@
+build/
+install/
+log/
+.DS_Store
+venv/
+.env
+*.env
+*.pdf
+.vscode/
