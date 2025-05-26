@@ -10,7 +10,6 @@ find_package(ament_cmake REQUIRED)
 find_package(robot_state_publisher REQUIRED)
 find_package(joint_state_publisher REQUIRED)
 find_package(joint_state_publisher_gui REQUIRED) # If using the GUI version in launch files
-find_package(gazebo_ros REQUIRED)
 find_package(launch_ros REQUIRED) # Typically not a CMake dependency, but an exec_depend for launch files
 find_package(xacro REQUIRED)
 # uncomment the following section in order to fill in

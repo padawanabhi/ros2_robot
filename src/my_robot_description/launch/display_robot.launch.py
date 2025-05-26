@@ -1,7 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, GroupAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, Command, PythonExpression
 from launch.conditions import IfCondition, UnlessCondition
@@ -18,6 +18,14 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     # Set use_gui to true to use joint_state_publisher_gui, false for joint_state_publisher
     use_gui = LaunchConfiguration('use_gui', default='true') 
+
+    # Add launch argument for launching Gazebo Sim
+    declare_launch_gz_cmd = DeclareLaunchArgument(
+        'launch_gz',
+        default_value='false',
+        description='Launch Gazebo Sim (ros_gz_sim) if true')
+
+    launch_gz = LaunchConfiguration('launch_gz', default='false')
 
     # Declare launch arguments
     declare_use_sim_time_cmd = DeclareLaunchArgument(
@@ -80,13 +88,23 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}]
     )
 
+    # Optionally launch Gazebo Sim (ros_gz_sim)
+    gz_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gazebo.launch.py')
+        ),
+        condition=IfCondition(launch_gz)
+    )
+
     return LaunchDescription([
         declare_use_sim_time_cmd,
         declare_use_gui_cmd,
+        declare_launch_gz_cmd,
         robot_state_publisher_node,
         joint_state_publisher_node,
         joint_state_publisher_gui_node,
-        rviz_node
+        rviz_node,
+        gz_launch
     ])
 
 # A simple RViz config file (display.rviz) needs to be created in a 'rviz' directory
@@ -125,3 +143,6 @@ def generate_launch_description():
 #   Global Options:
 #     Fixed Frame: base_link
 #     Frame Rate: 30 
+
+# To spawn your robot in Gazebo Sim, after launching with launch_gz:=true, run:
+# ros2 run ros_gz_sim create -file <path_to_urdf> -name <robot_name> 
