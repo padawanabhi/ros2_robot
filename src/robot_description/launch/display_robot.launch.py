@@ -16,7 +16,7 @@ def generate_launch_description():
     urdf_file_path = os.path.join(pkg_my_robot_description, 'urdf', 'my_robot.urdf.xacro')
 
     # Path to the warehouse world file
-    world_path = os.path.join(pkg_my_robot_description, 'worlds', 'warehouse.world')
+    world_path = os.path.join(pkg_my_robot_description, 'worlds', 'base.world')
 
     # Launch configuration variables
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
