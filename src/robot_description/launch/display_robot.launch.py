@@ -1,6 +1,7 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
+from launch_ros.parameter_descriptions import ParameterValue
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, GroupAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, Command, PythonExpression
@@ -9,7 +10,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # Get the share directory of the my_robot_description package
-    pkg_my_robot_description = get_package_share_directory('my_robot_description')
+    pkg_my_robot_description = get_package_share_directory('robot_description')
 
     # Path to the URDF file (xacro needs to be processed)
     urdf_file_path = os.path.join(pkg_my_robot_description, 'urdf', 'my_robot.urdf.xacro')
@@ -44,13 +45,13 @@ def generate_launch_description():
     # Robot State Publisher Node
     # Publishes TF transforms for the robot based on joint states
     robot_state_publisher_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name='robot_state_publisher',
-        output='screen',
-        parameters=[{
-            'robot_description': robot_description_content,
-            'use_sim_time': use_sim_time
+    package='robot_state_publisher',
+    executable='robot_state_publisher',
+    name='robot_state_publisher',
+    output='screen',
+    parameters=[{
+        'robot_description': ParameterValue(robot_description_content, value_type=str),
+        'use_sim_time': use_sim_time
         }]
     )
 
@@ -91,7 +92,7 @@ def generate_launch_description():
     # Optionally launch Gazebo Sim (ros_gz_sim)
     gz_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gazebo.launch.py')
+            os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
         ),
         condition=IfCondition(launch_gz)
     )
