@@ -15,6 +15,9 @@ def generate_launch_description():
     # Path to the URDF file (xacro needs to be processed)
     urdf_file_path = os.path.join(pkg_my_robot_description, 'urdf', 'my_robot.urdf.xacro')
 
+    # Path to the warehouse world file
+    world_path = os.path.join(pkg_my_robot_description, 'worlds', 'warehouse.world')
+
     # Launch configuration variables
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
     # Set use_gui to true to use joint_state_publisher_gui, false for joint_state_publisher
@@ -89,11 +92,12 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}]
     )
 
-    # Optionally launch Gazebo Sim (ros_gz_sim)
+    # Optionally launch Gazebo Sim (ros_gz_sim) with the custom world
     gz_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
         ),
+        launch_arguments={'world': world_path}.items(),
         condition=IfCondition(launch_gz)
     )
 
