@@ -7,5 +7,13 @@
     <include>
     <uri>model://ground_plane</uri>
     </include>
+    <include>
+      <uri>model://shelves_high</uri>
+      <pose>1 2 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://Box</uri>
+      <pose>2 3 0 0 0 0</pose>
+    </include>
 </world>
 </sdf>
