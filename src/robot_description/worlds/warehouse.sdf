@@ -1,0 +1,524 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="warehouse">
+    <!-- Ambient light -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>12 12</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>12 12</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Warehouse walls and structure - scaled appropriately for TurtleBot3 -->
+    <!-- Back wall (positioned at z=1.0 so bottom is at ground level) -->
+    <model name="back_wall">
+      <static>true</static>
+      <pose>0 -5 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>10 0.1 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>10 0.1 2</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.6 0.6 0.6 1</ambient>
+            <diffuse>0.6 0.6 0.6 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Front wall -->
+    <model name="front_wall">
+      <static>true</static>
+      <pose>0 5 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>10 0.1 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>10 0.1 2</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.6 0.6 0.6 1</ambient>
+            <diffuse>0.6 0.6 0.6 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Left wall -->
+    <model name="left_wall">
+      <static>true</static>
+      <pose>-5 0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 10 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 10 2</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.6 0.6 0.6 1</ambient>
+            <diffuse>0.6 0.6 0.6 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Right wall -->
+    <model name="right_wall">
+      <static>true</static>
+      <pose>5 0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 10 2</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 10 2</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.6 0.6 0.6 1</ambient>
+            <diffuse>0.6 0.6 0.6 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Warehouse shelves/obstacles creating navigation paths -->
+    <!-- More dense layout with multiple rows and columns -->
+    
+    <!-- Row 1 (y = -3.5) -->
+    <model name="shelf_r1_c1">
+      <static>true</static>
+      <pose>-3.5 -3.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r1_c2">
+      <static>true</static>
+      <pose>-1.5 -3.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r1_c3">
+      <static>true</static>
+      <pose>1.5 -3.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r1_c4">
+      <static>true</static>
+      <pose>3.5 -3.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Row 2 (y = -2.0) -->
+    <model name="shelf_r2_c1">
+      <static>true</static>
+      <pose>-3.5 -2.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r2_c2">
+      <static>true</static>
+      <pose>-1.5 -2.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r2_c3">
+      <static>true</static>
+      <pose>1.5 -2.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r2_c4">
+      <static>true</static>
+      <pose>3.5 -2.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Row 3 (y = -0.5) -->
+    <model name="shelf_r3_c1">
+      <static>true</static>
+      <pose>-3.5 -0.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r3_c2">
+      <static>true</static>
+      <pose>-1.5 -0.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r3_c3">
+      <static>true</static>
+      <pose>1.5 -0.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r3_c4">
+      <static>true</static>
+      <pose>3.5 -0.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Row 4 (y = 1.0) -->
+    <model name="shelf_r4_c1">
+      <static>true</static>
+      <pose>-3.5 1.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r4_c2">
+      <static>true</static>
+      <pose>-1.5 1.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r4_c3">
+      <static>true</static>
+      <pose>1.5 1.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r4_c4">
+      <static>true</static>
+      <pose>3.5 1.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Row 5 (y = 2.5) -->
+    <model name="shelf_r5_c1">
+      <static>true</static>
+      <pose>-3.5 2.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r5_c2">
+      <static>true</static>
+      <pose>-1.5 2.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r5_c3">
+      <static>true</static>
+      <pose>1.5 2.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r5_c4">
+      <static>true</static>
+      <pose>3.5 2.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Row 6 (y = 4.0) -->
+    <model name="shelf_r6_c1">
+      <static>true</static>
+      <pose>-3.5 4.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r6_c2">
+      <static>true</static>
+      <pose>-1.5 4.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r6_c3">
+      <static>true</static>
+      <pose>1.5 4.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="shelf_r6_c4">
+      <static>true</static>
+      <pose>3.5 4.0 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.8 0.3 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.8 0.3 0.8</size></box></geometry>
+          <material><ambient>0.5 0.3 0.2 1</ambient><diffuse>0.5 0.3 0.2 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Partial dividers - create aisles but leave openings for navigation -->
+    <!-- Vertical divider 1 (partial - leaves opening in center around y=0) -->
+    <model name="divider_v1_top">
+      <static>true</static>
+      <pose>-2.5 2.5 1.0 0 0 1.5708</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.1 2.5 2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.1 2.5 2</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="divider_v1_bottom">
+      <static>true</static>
+      <pose>-2.5 -2.5 1.0 0 0 1.5708</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.1 2.5 2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.1 2.5 2</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+    
+    <!-- Vertical divider 2 (partial - leaves opening in center around y=0) -->
+    <model name="divider_v2_top">
+      <static>true</static>
+      <pose>2.5 2.5 1.0 0 0 1.5708</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.1 2.5 2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.1 2.5 2</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="divider_v2_bottom">
+      <static>true</static>
+      <pose>2.5 -2.5 1.0 0 0 1.5708</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.1 2.5 2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.1 2.5 2</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Horizontal divider 1 (partial - leaves opening on sides) -->
+    <model name="divider_h1_left">
+      <static>true</static>
+      <pose>-2.0 -2.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2 0.1 2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2 0.1 2</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="divider_h1_right">
+      <static>true</static>
+      <pose>2.0 -2.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2 0.1 2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2 0.1 2</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Horizontal divider 2 (partial - leaves opening on sides) -->
+    <model name="divider_h2_left">
+      <static>true</static>
+      <pose>-2.0 2.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2 0.1 2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2 0.1 2</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="divider_h2_right">
+      <static>true</static>
+      <pose>2.0 2.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2 0.1 2</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>2 0.1 2</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient><diffuse>0.5 0.5 0.5 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Additional center obstacles to create more complex paths (moved away from spawn point) -->
+    <model name="center_obstacle_1">
+      <static>true</static>
+      <pose>-1.5 -1.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.6 0.6 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.6 0.6 0.8</size></box></geometry>
+          <material><ambient>0.4 0.4 0.6 1</ambient><diffuse>0.4 0.4 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="center_obstacle_2">
+      <static>true</static>
+      <pose>1.5 1.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.6 0.6 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.6 0.6 0.8</size></box></geometry>
+          <material><ambient>0.4 0.4 0.6 1</ambient><diffuse>0.4 0.4 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="center_obstacle_3">
+      <static>true</static>
+      <pose>-1.5 1.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.5 0.5 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.5 0.5 0.8</size></box></geometry>
+          <material><ambient>0.4 0.4 0.6 1</ambient><diffuse>0.4 0.4 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+    <model name="center_obstacle_4">
+      <static>true</static>
+      <pose>1.5 -1.5 0.4 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.5 0.5 0.8</size></box></geometry></collision>
+        <visual name="visual"><geometry><box><size>0.5 0.5 0.8</size></box></geometry>
+          <material><ambient>0.4 0.4 0.6 1</ambient><diffuse>0.4 0.4 0.6 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Physics settings -->
+    <physics type="ignition">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <!-- Scene settings -->
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <!-- GUI plugin for camera view -->
+    <gui fullscreen="0">
+      <camera name="user_camera">
+        <pose>3 -3 3 0 0.5 -0.79</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>
+

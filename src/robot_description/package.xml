@@ -3,22 +3,20 @@
 <package format="3">
   <name>robot_description</name>
   <version>0.0.1</version>
-  <description>robot_description</description>
+  <description>TurtleBot3 launch files and configurations</description>
   <maintainer email="abhishek.nair123@yahoo.com">abhishek</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <depend>xacro</depend>
+  <depend>turtlebot3_description</depend>
+  <depend>turtlebot3_navigation2</depend>
+  <depend>nav2_bringup</depend>
+  <depend>ros_gz_sim</depend>
+  <depend>ros_gz_bridge</depend>
   <depend>robot_state_publisher</depend>
-  <build_depend>joint_state_publisher</build_depend>
-  <exec_depend>joint_state_publisher</exec_depend>
-  <build_depend>joint_state_publisher_gui</build_depend>
-  <exec_depend>joint_state_publisher_gui</exec_depend>
-  <exec_depend>ros_gz_sim</exec_depend>
+  <depend>xacro</depend>
   <depend>launch_ros</depend>
-  <depend>urdf</depend>
-  <depend>controller_manager</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

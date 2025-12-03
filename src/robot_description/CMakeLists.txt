@@ -7,15 +7,9 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(robot_state_publisher REQUIRED)
-find_package(xacro REQUIRED)
-find_package(ros_gz REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY urdf launch rviz
+  DIRECTORY launch rviz worlds
   DESTINATION share/${PROJECT_NAME}
 )
 
